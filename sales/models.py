@@ -4,19 +4,19 @@ from inventories.models import Product
 
 
 # =========================
-# MODEL: INVOICE (HÓA ĐƠN)
+# MODEL: INVOICE
 # =========================
 class Invoice(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Ngày bán")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Sale Date")
 
     total_amount = models.DecimalField(
-        max_digits=14, decimal_places=2, default=0, verbose_name="Tổng tiền"
+        max_digits=14, decimal_places=2, default=0, verbose_name="Total Amount"
     )
 
     def update_total_amount(self):
         """
-        Tính lại tổng tiền hóa đơn
-        = tổng subtotal của các InvoiceDetail
+        Recalculates the total invoice amount
+        Sum of all associated InvoiceDetail subtotals
         """
         total = self.details.aggregate(total=Sum("subtotal"))["total"] or 0
 
@@ -24,65 +24,65 @@ class Invoice(models.Model):
         self.save(update_fields=["total_amount"])
 
     def __str__(self):
-        return f"Hóa đơn #{self.pk} - {self.created_at.strftime('%d/%m/%Y %H:%M')}"
+        return f"Invoice #{self.pk} - {self.created_at.strftime('%d/%m/%Y %H:%M')}"
 
     class Meta:
-        verbose_name = "Hóa đơn"
-        verbose_name_plural = "Hóa đơn"
+        verbose_name = "Invoice"
+        verbose_name_plural = "Invoices"
 
 
 # =====================================
-# MODEL: INVOICE DETAIL (CHI TIẾT HÓA ĐƠN)
+# MODEL: INVOICE DETAIL
 # =====================================
 class InvoiceDetail(models.Model):
     invoice = models.ForeignKey(
         Invoice,
         on_delete=models.CASCADE,
         related_name="details",
-        verbose_name="Hóa đơn",
+        verbose_name="Invoice",
     )
 
     product = models.ForeignKey(
         Product,
         on_delete=models.PROTECT,
-        verbose_name="Sản phẩm",
+        verbose_name="Product",
     )
 
-    quantity = models.PositiveIntegerField(verbose_name="Số lượng")
+    quantity = models.PositiveIntegerField(verbose_name="Quantity")
 
     price_at_sale = models.DecimalField(
-        max_digits=12, decimal_places=2, verbose_name="Giá bán lúc đó"
+        max_digits=12, decimal_places=2, verbose_name="Unit Price (at Sale)"
     )
 
     subtotal = models.DecimalField(
-        max_digits=14, decimal_places=2, verbose_name="Thành tiền"
+        max_digits=14, decimal_places=2, verbose_name="Subtotal"
     )
 
     def save(self, *args, **kwargs):
-        is_new = self.pk is None  # phân biệt tạo mới / cập nhật
+        is_new = self.pk is None  # Check for creation vs update
 
-        # Tính thành tiền
+        # Calculate subtotal
         self.subtotal = self.quantity * self.price_at_sale
 
         with transaction.atomic():
             super().save(*args, **kwargs)
 
             if is_new:
-                # Kiểm tra tồn kho
+                # Inventory Check
                 if self.product.stock < self.quantity:
-                    raise ValueError("Số lượng tồn kho không đủ")
+                    raise ValueError("Insufficient stock levels")
 
-                # Trừ tồn kho
+                # Deduct from inventory
                 Product.objects.filter(pk=self.product_id).update(
                     stock=F("stock") - self.quantity
                 )
 
-        # Cập nhật tổng tiền hóa đơn
+        # Refresh total invoice amount
         self.invoice.update_total_amount()
 
     def delete(self, *args, **kwargs):
         """
-        Khi xóa chi tiết hóa đơn → hoàn lại tồn kho
+        Restores stock levels when an item is removed from an invoice
         """
         with transaction.atomic():
             Product.objects.filter(pk=self.product_id).update(
@@ -96,5 +96,5 @@ class InvoiceDetail(models.Model):
         return f"{self.invoice} - {self.product} x {self.quantity}"
 
     class Meta:
-        verbose_name = "Chi tiết hóa đơn"
-        verbose_name_plural = "Chi tiết hóa đơn"
+        verbose_name = "Invoice Detail"
+        verbose_name_plural = "Invoice Details"

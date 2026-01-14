@@ -26,12 +26,12 @@
   <div>
     <h2 class="fw-bold mb-0">Invoice #{{ invoice.pk }}</h2>
     <p class="mb-0 opacity-75">
-      Date: {{ invoice.datetime|date:"M d, Y H:i" }}
+      Date: {{ invoice.created_at|date:"M d, Y H:i" }}
     </p>
   </div>
   <div class="text-end">
     <p class="small mb-0 opacity-75 text-uppercase fw-semibold">Grand Total</p>
-    <h1 class="fw-bold mb-0">${{ invoice.total_amount }}</h1>
+    <h1 class="fw-bold mb-0">{{ invoice.total_amount }}</h1>
   </div>
 </div>
 
@@ -64,7 +64,7 @@
           {% endif %}
         </div>
         <div class="col-md-3">
-          <label class="form-label small fw-bold text-muted">Price ($)</label>
+          <label class="form-label small fw-bold text-muted">Price ()</label>
           {{ form.price_at_sale }} {% if form.price_at_sale.errors %}
           <div class="text-danger small">
             {{ form.price_at_sale.errors|striptags }}
@@ -105,8 +105,8 @@
             >{{ detail.quantity }}</span
           >
         </td>
-        <td class="text-muted">${{ detail.price_at_sale }}</td>
-        <td class="fw-bold text-dark">${{ detail.subtotal }}</td>
+        <td class="text-muted">{{ detail.price_at_sale }}</td>
+        <td class="fw-bold text-dark">{{ detail.subtotal }}</td>
         <td class="pe-4 text-end"></td>
       </tr>
       {% empty %}

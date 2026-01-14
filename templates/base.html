@@ -1,35 +1,52 @@
+<!-- prettier-ignore -->
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Thiết lập viewport để giao diện responsive trên mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tiêu đề trang, có thể bị override ở các template con -->
     <title>{% block title %}Grocery Management{% endblock %}</title>
 
+    <!-- Import font Inter từ Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Import Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+
+    <!-- Import Font Awesome để dùng icon -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+
+    <!-- Import CSS tùy chỉnh của project -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
 
+    <!-- Block cho CSS riêng của từng trang con -->
     {% block extra_css %}{% endblock %}
   </head>
+
   <body>
+    <!-- ================= NAVBAR ================= -->
     <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
       <div class="container">
+        <!-- Logo / Brand -->
         <a class="navbar-brand fw-bold" href="/">
-          <i class="fa-solid fa-layer-group text-primary me-2"></i>Grocery
-          Manager
+          <i class="fa-solid fa-layer-group text-primary me-2"></i>
+          Grocery Manager
         </a>
 
+        <!-- Nút toggle menu trên màn hình nhỏ -->
         <button
           class="navbar-toggler border-0"
           type="button"
@@ -39,8 +56,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- Danh sách menu -->
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
+            <!-- Link danh sách sản phẩm -->
             <li class="nav-item">
               <a
                 class="nav-link px-3"
@@ -49,6 +68,8 @@
                 <i class="fa-solid fa-box me-1"></i> Products
               </a>
             </li>
+
+            <!-- Link danh sách phiếu nhập -->
             <li class="nav-item">
               <a
                 class="nav-link px-3"
@@ -57,6 +78,8 @@
                 <i class="fa-solid fa-file-arrow-down me-1"></i> Purchases
               </a>
             </li>
+
+            <!-- Link danh sách hóa đơn bán hàng -->
             <li class="nav-item">
               <a class="nav-link px-3" href="{% url 'sales:invoice_list' %}">
                 <i class="fa-solid fa-receipt me-1"></i> Invoices
@@ -64,26 +87,30 @@
             </li>
           </ul>
 
-          {% comment %}
-          <div class="ms-lg-3 d-flex align-items-center">
-            <span class="text-muted small d-none d-lg-inline">Admin</span>
-            <i class="fa-solid fa-circle-user fs-4 ms-2 text-primary"></i>
-          </div>
-          {% endcomment %}
+          {% comment %} {% endcomment %} {% comment %} Khu vực hiển thị thông
+          tin người dùng (hiện đang comment lại) Có thể dùng khi triển khai đăng
+          nhập / phân quyền {% endcomment %}
         </div>
       </div>
     </nav>
 
+    <!-- ================= HIỂN THỊ MESSAGE ================= -->
     <div class="container mt-4">
       {% if messages %} {% for message in messages %}
+      <!-- Alert Bootstrap hiển thị thông báo thành công / lỗi -->
       <div
         class="alert alert-{{ message.tags }} alert-dismissible fade show border-0 shadow-sm custom-alert"
         role="alert"
       >
+        <!-- Icon thay đổi theo loại message -->
         <i
-          class="fa-solid {% if message.tags == 'success' %}fa-circle-check text-success{% else %}fa-circle-info text-info{% endif %} me-2"
+          class="fa-solid {% if message.tags == 'success' %} fa-circle-check text-success {% else %} fa-circle-info text-info {% endif %} me-2"
         ></i>
+
+        <!-- Nội dung message -->
         {{ message }}
+
+        <!-- Nút đóng alert -->
         <button
           type="button"
           class="btn-close"
@@ -94,19 +121,25 @@
       {% endfor %} {% endif %}
     </div>
 
+    <!-- ================= NỘI DUNG CHÍNH ================= -->
     <main class="container py-4">
+      <!-- Block content sẽ được các template con ghi đè -->
       <div class="content-wrapper">{% block content %}{% endblock %}</div>
     </main>
 
+    <!-- ================= FOOTER ================= -->
     <footer class="footer py-4 mt-auto">
       <div class="container text-center">
-        <span class="text-muted small"
-          >&copy; 2026 Grocery Management System. All rights reserved.</span
-        >
+        <span class="text-muted small">
+          &copy; 2026 Grocery Management System. All rights reserved.
+        </span>
       </div>
     </footer>
 
+    <!-- Import Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Block cho JS riêng của từng trang con -->
     {% block extra_js %}{% endblock %}
   </body>
 </html>
