@@ -1,0 +1,11 @@
+# Cài đặt môi trường
+python -m venv venv
+venv/scripts/activate
+pip install django
+
+# Tạo dự án Django bên trong thư mục chính
+django-admin startproject core .
+
+# Tạo các App
+python manage.py startapp inventories 
+python manage.py startapp invoices 

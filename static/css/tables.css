@@ -1,0 +1,107 @@
+/* tables.css - Clean, Modern Table Styling */
+
+.table thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table tbody td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: #475569;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* Hover effect for rows */
+.table-hover tbody tr:hover {
+    background-color: #f8fafc;
+    transition: background-color 0.2s ease;
+}
+
+/* Custom Search Input */
+.input-group-text {
+    border-radius: 8px 0 0 8px;
+}
+.form-control {
+    border-radius: 8px;
+}
+
+/* Action Buttons hover */
+.btn-outline-warning:hover {
+    background-color: #fefce8;
+    color: #ca8a04;
+}
+.btn-outline-danger:hover {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+/* Badge styling */
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+}
+
+/* Table container rounding fix */
+.table-responsive {
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+/* tables.css bổ sung */
+
+/* Màu xanh nhẹ cho badge Quantity */
+.bg-info-subtle {
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
+    border: 1px solid #bae6fd;
+}
+
+/* Định dạng cột thời gian */
+.table td div {
+    line-height: 1.2;
+}
+
+/* Hiệu ứng row khi hover cho Purchase List */
+.table-hover tbody tr:hover {
+    background-color: #f0fdf4 !important; /* Màu xanh lá cực nhẹ khi hover vào phiếu nhập */
+}
+
+/* Đảm bảo căn giữa header và body đồng nhất */
+.text-center {
+    text-align: center !important;
+}
+
+.text-start {
+    text-align: left !important;
+}
+
+/* tables.css bổ sung */
+
+/* Làm nổi bật mã hóa đơn */
+.text-primary {
+    color: #2563eb !important;
+}
+
+/* Tùy chỉnh icon trong nút chi tiết */
+.btn-outline-primary:hover {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+/* Định dạng chung cho hàng hóa đơn */
+.table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8fafc !important;
+    cursor: pointer;
+}

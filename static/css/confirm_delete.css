@@ -1,0 +1,59 @@
+.delete-container {
+    min-height: 60vh; /* Centers the card vertically in the main area */
+}
+
+.delete-card {
+    max-width: 500px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.warning-icon-wrapper {
+    animation: pulse 2s infinite;
+}
+
+.btn-lg {
+    padding: 12px 30px;
+    font-size: 1rem;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Subtle pulse animation for the warning icon */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* confirm_delete.css bổ sung */
+
+.invoice-summary-mini {
+    border: 1px dashed #cbd5e1;
+}
+
+.font-italic {
+    font-style: italic;
+}
+
+/* Hiệu ứng rung nhẹ cho icon khi load trang để gây chú ý */
+.warning-icon-wrapper i {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+}

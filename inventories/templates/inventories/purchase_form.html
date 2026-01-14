@@ -1,0 +1,86 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Grocery Manager{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}" />
+{% endblock %} {% block content %}
+<div class="form-container mx-auto">
+  <div class="card border-0 shadow-sm form-card">
+    <div class="card-header bg-white border-0 pt-4 pb-0">
+      <div class="d-flex align-items-center">
+        <div
+          class="icon-shape bg-soft-success me-3"
+          style="
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #dcfce7;
+          "
+        >
+          <i class="fa-solid fa-file-import text-success"></i>
+        </div>
+        <div>
+          <h3 class="fw-bold text-dark mb-0">{{ title }}</h3>
+          <p class="text-muted small mb-0">
+            Enter purchase order details below
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body p-4">
+      <form method="post" novalidate>
+        {% csrf_token %} {% if form.non_field_errors %}
+        <div class="alert alert-danger shadow-sm border-0 mb-4">
+          <i class="fa-solid fa-triangle-exclamation me-2"></i>
+          {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+        {% endif %} {% for field in form %}
+        <div class="mb-4">
+          <label
+            for="{{ field.id_for_label }}"
+            class="form-label fw-semibold text-secondary"
+          >
+            {{ field.label }}
+          </label>
+
+          <div class="input-wrapper">{{ field }}</div>
+
+          {% if field.errors %}
+          <div
+            class="invalid-feedback d-block mt-2 animate__animated animate__fadeIn"
+          >
+            <i class="fa-solid fa-circle-exclamation me-1"></i>
+            {{ field.errors|striptags }}
+          </div>
+          {% endif %} {% if field.help_text %}
+          <div class="form-text text-muted small">{{ field.help_text }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="d-flex gap-2 mt-5">
+          <button
+            type="submit"
+            class="btn btn-success px-4 py-2 rounded-pill shadow-sm text-white"
+          >
+            <i class="fa-solid fa-check-circle me-2"></i>Confirm Purchase
+          </button>
+          <a
+            href="{% url 'inventories:purchase_list' %}"
+            class="btn btn-light px-4 py-2 rounded-pill border"
+          >
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+.form-container {
+    max-width: 650px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.form-card {
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+/* Tùy chỉnh các input do Django tạo ra */
+input[type="text"], 
+input[type="number"], 
+input[type="email"], 
+input[type="password"], 
+input[type="date"], 
+select, 
+textarea {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #334155;
+    background-color: #f8fafc;
+    background-clip: padding-box;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hiệu ứng khi click vào ô nhập liệu */
+input:focus, select:focus, textarea:focus {
+    background-color: #ffffff;
+    border-color: #3b82f6;
+    outline: 0;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.form-label {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.invalid-feedback {
+    font-size: 0.85rem;
+    color: #ef4444;
+    font-weight: 500;
+}
+
+/* Hiệu ứng Fade In cho thông báo lỗi */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Re-applying to ensure the Purchase form looks like the Product form */
+input, select, textarea {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+input:focus {
+    border-color: #10b981; /* Green focus for Purchases */
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}

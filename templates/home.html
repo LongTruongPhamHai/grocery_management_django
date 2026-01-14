@@ -1,0 +1,83 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %} 
+{% block title %}Admin Dashboard | Grocery Manager{% endblock %}
+
+{% block content %}
+<div class="dashboard-header mb-5">
+  <h2 class="fw-bold text-dark">Management Dashboard</h2>
+  <p class="text-muted">
+    Welcome back, Admin. Here is an overview of your system modules.
+  </p>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm dashboard-card transition-up">
+      <div class="card-body p-4">
+        <div class="icon-shape bg-soft-primary mb-4">
+          <i class="fa-solid fa-boxes-stacked fs-3 text-primary"></i>
+        </div>
+        <h5 class="fw-bold mb-3">Inventory & Products</h5>
+        <p class="text-muted small">
+          Complete control over your product catalog: add new items, update
+          stock levels, and manage categories.
+        </p>
+        <div class="mt-auto pt-3">
+          <a
+            href="{% url 'inventories:product_list' %}"
+            class="btn btn-primary w-100 rounded-pill"
+          >
+            Manage Products <i class="fa-solid fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm dashboard-card transition-up">
+      <div class="card-body p-4">
+        <div class="icon-shape bg-soft-success mb-4">
+          <i class="fa-solid fa-truck-ramp-box fs-3 text-success"></i>
+        </div>
+        <h5 class="fw-bold mb-3">Purchase Orders</h5>
+        <p class="text-muted small">
+          Track incoming stock from suppliers. Create purchase receipts and
+          monitor your investment growth.
+        </p>
+        <div class="mt-auto pt-3">
+          <a
+            href="{% url 'inventories:purchase_list' %}"
+            class="btn btn-success w-100 rounded-pill text-white"
+          >
+            Manage Purchases <i class="fa-solid fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm dashboard-card transition-up">
+      <div class="card-body p-4">
+        <div class="icon-shape bg-soft-warning mb-4">
+          <i class="fa-solid fa-file-invoice-dollar fs-3 text-warning"></i>
+        </div>
+        <h5 class="fw-bold mb-3">Sales & Invoices</h5>
+        <p class="text-muted small">
+          Generate professional customer invoices, track daily sales
+          performance, and view transaction history.
+        </p>
+        <div class="mt-auto pt-3">
+          <a
+            href="{% url 'sales:invoice_list' %}"
+            class="btn btn-warning w-100 rounded-pill text-white"
+          >
+            Manage Invoices <i class="fa-solid fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

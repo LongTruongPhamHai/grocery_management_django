@@ -1,0 +1,58 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Delete Invoice #{{ invoice.pk }} | Grocery Manager{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/confirm_delete.css' %}" />
+{% endblock %} {% block content %}
+<div class="delete-container d-flex justify-content-center align-items-center">
+  <div class="card border-0 shadow-lg delete-card">
+    <div class="card-body p-5 text-center">
+      <div class="warning-icon-wrapper mb-4">
+        <i class="fa-solid fa-file-circle-xmark text-danger display-3"></i>
+      </div>
+
+      <h2 class="fw-bold mb-3">Delete Invoice?</h2>
+      <p class="text-muted mb-4">
+        Are you sure you want to permanently delete
+        <strong>Invoice #{{ invoice.pk }}</strong>?
+        <br />
+        <span class="small text-danger font-italic"
+          >Note: This may affect your sales reports.</span
+        >
+      </p>
+
+      <div class="invoice-summary-mini mb-4 p-3 bg-light rounded-3">
+        <div class="d-flex justify-content-between small mb-1">
+          <span>Date:</span>
+          <span class="fw-bold text-dark"
+            >{{ invoice.datetime|date:"M d, Y" }}</span
+          >
+        </div>
+        <div class="d-flex justify-content-between small">
+          <span>Total Amount:</span>
+          <span class="fw-bold text-success">${{ invoice.total_amount }}</span>
+        </div>
+      </div>
+
+      <form method="post" class="d-flex flex-column gap-2">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="btn btn-danger btn-lg rounded-pill fw-bold"
+        >
+          <i class="fa-solid fa-trash-can me-2"></i>Permanently Delete
+        </button>
+        <a
+          href="{% url 'sales:invoice_list' %}"
+          class="btn btn-light btn-lg rounded-pill text-muted"
+        >
+          No, Keep Invoice
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

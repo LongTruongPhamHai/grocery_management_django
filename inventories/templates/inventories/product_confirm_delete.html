@@ -1,0 +1,41 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Delete Product | Grocery Manager{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/confirm_delete.css' %}" />
+{% endblock %} {% block content %}
+<div class="delete-container d-flex justify-content-center align-items-center">
+  <div class="card border-0 shadow-lg delete-card">
+    <div class="card-body p-5 text-center">
+      <div class="warning-icon-wrapper mb-4">
+        <i class="fa-solid fa-triangle-exclamation text-danger display-3"></i>
+      </div>
+
+      <h2 class="fw-bold mb-3">Confirm Deletion</h2>
+      <p class="text-muted mb-4">
+        Are you sure you want to delete <strong>"{{ product.name }}"</strong>?
+        <br />This action cannot be undone.
+      </p>
+
+      <form method="post" class="d-flex flex-column gap-2">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="btn btn-danger btn-lg rounded-pill fw-bold"
+        >
+          <i class="fa-solid fa-trash-can me-2"></i>Delete Product
+        </button>
+        <a
+          href="{% url 'inventories:product_list' %}"
+          class="btn btn-light btn-lg rounded-pill text-muted"
+        >
+          Cancel and Go Back
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
